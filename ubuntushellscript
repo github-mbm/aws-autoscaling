@@ -1,5 +1,7 @@
 #!/bin/bash
-#Use t2.micro. If you use t3.micro then the network interface should be ens5 in the playbook.
+# Use t2.micro. If you use t3.micro then the network interface should be ens5 in the playbook.
+
+# GIVE ONLY BELOW IN THE USER DATA FOR AMI IMAGE FOR AWS AUTOSCALING
 sudo apt update
 sudo apt install software-properties-common -y
 sudo apt-add-repository --yes --update ppa:ansible/ansible
@@ -8,15 +10,7 @@ sudo apt install ansible -y
 sudo apt install nginx -y
 sudo apt install python-apt -y
 sudo apt install -y git stress
-sudo git clone -b aws_autoscaling_test https://github.com/manjutech/aws_autoscaling_test.git /myrepo
-######GIVE ONLY ABOVE IN THE USER DATA FOR AMI IMAGE FOR AWS AUTOSCALING##########
+sudo git clone -b aws_autoscaling_test https://github.com/github-mbm/aws-autoscaling.git /myrepo
 
-#####GIVE BELOW IN THE LAUNCH CONFIG USERDATA#####################################
+# GIVE BELOW IN THE LAUNCH CONFIG USERDATA
 ansible-playbook /myrepo/playbook.yaml
-
-######GIVE BELOW IN THE CUSTOM DATA OF AZURE VMSSS################################
-#cloud-config
-package_upgrade: true
-packages: - jq
-
-runcmd:  - ansible-playbook /myrepo/playbook.yaml
