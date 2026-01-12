@@ -19,9 +19,9 @@
         name: nginx
         state: present
 
-    - name: Deploy index page
+    - name: Deploy index page from repo template
       template:
-        src: index.j2
+        src: /myrepo/index.j2
         dest: /var/www/html/index.html
         owner: root
         group: root
