@@ -19,13 +19,19 @@
         name: nginx
         state: present
 
-    - name: Deploy index page from repo template
+    - name: Remove default nginx page
+      file:
+        path: /var/www/html/index.nginx-debian.html
+        state: absent
+
+    - name: Deploy index page
       template:
-        src: /myrepo/index.j2
+        src: index.j2
         dest: /var/www/html/index.html
         owner: root
         group: root
         mode: "0644"
+      notify: Reload nginx
 
     - name: Ensure nginx is running
       service:
@@ -33,3 +39,8 @@
         state: started
         enabled: yes
 
+  handlers:
+    - name: Reload nginx
+      service:
+        name: nginx
+        state: reloaded
